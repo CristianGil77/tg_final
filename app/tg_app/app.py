@@ -150,7 +150,7 @@ def main():
             point_cloud = zed_camera.capture_point_cloud()
             image_ocv = zed_camera.capture_image()
 
-    
+            print("prueba de cgraficar los bbox")
             ###############################################################################
             equalized_image = preprocessing.equalize_histogram(image_ocv)
             detections = model.process_frame(equalized_image)
@@ -158,7 +158,7 @@ def main():
             if detections:
                 relative_position.calculate_ubication(detections, point_cloud, equalized_image)
                 print("dibujando...")
-                image = relative_position.draw_bboxes(equalized_image, detections )
+                relative_position.draw_bboxes(equalized_image, detections )
 
                 # for det in detections:
                 #     print(det)
@@ -200,7 +200,7 @@ def main():
 
 
             
-            cv2.imshow('YOLOv8 Detections', image)
+            cv2.imshow('YOLOv8 Detections', equalized_image)
             if cv2.waitKey(30) >= 0:
                 break
 
