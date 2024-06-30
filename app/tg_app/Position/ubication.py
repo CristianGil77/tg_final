@@ -122,18 +122,18 @@ class Ubication:
             
             # Preparar los textos
             class_text = f"{class_name} ({conf:.2f})"
-            angle_text = f"A: {angle:.2f}°"
+            angle_text = f"A: {angle:.2f}"
             distance_text = f"D: {distance:.2f}m"
-            
-            # Calcular las posiciones para los textos
-            class_text_position = (x + 5, y + 5 + class_h)  # Arriba dentro del bbox
-            angle_text_position = (x + 5, y + 5 + class_h + 5 + angle_h)  # Debajo del texto de la clase
-            distance_text_position = (x + 5, y + 5 + class_h + 5 + angle_h + 5 + distance_h)  # Debajo del texto del ángulo
             
             # Dimensiones del texto
             (class_w, class_h), _ = cv2.getTextSize(class_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
             (angle_w, angle_h), _ = cv2.getTextSize(angle_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
             (distance_w, distance_h), _ = cv2.getTextSize(distance_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+            
+            # Calcular las posiciones para los textos dentro del bbox
+            class_text_position = (x + 5, y + 5 + class_h)  # Arriba dentro del bbox
+            angle_text_position = (x + 5, y + 5 + class_h + 5 + angle_h)  # Debajo del texto de la clase
+            distance_text_position = (x + 5, y + 5 + class_h + 5 + angle_h + 5 + distance_h)  # Debajo del texto del ángulo
             
             # Fondo para el texto
             cv2.rectangle(image, (x, y - class_h - 10), (x + class_w, y), (255, 0, 0), -1)
