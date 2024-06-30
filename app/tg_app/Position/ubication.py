@@ -62,7 +62,6 @@ class Ubication:
         # Calcular las distancias euclidianas ignorando la cuarta dimensión
         distancias = np.sqrt(np.sum(valid_points**2, axis=1))
         
-        # Calcular el percentil 25 y 75
         q1 = np.percentile(distancias, 1)
 
         distancias_filtradas = distancias[(distancias > q1)]
@@ -97,18 +96,55 @@ class Ubication:
         """
         return distance / self.length_step
 
-    def draw_ubication(self, image, distance, angle_degrees, x, y):
-        """
-        Dibuja la distancia y el ángulo en la imagen en las coordenadas especificadas.
 
-        :param image: Imagen en la que se dibujarán los resultados.
-        :param distance: Distancia calculada al objeto.
-        :param angle_degrees: Ángulo calculado en grados.
-        :param x: Coordenada x en la imagen.
-        :param y: Coordenada y en la imagen.
+
+    def draw_bboxes(self, image, bboxes):
         """
-        cv2.putText(image, f"Distance: {distance:.2f}m", (x, y - 10), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 1)
-        cv2.putText(image, f"Angle: {angle_degrees:.2f}", (x, y - 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 1)
+        Dibuja múltiples bounding boxes en la imagen con el nombre de la clase, la distancia, el ángulo y la confianza.
+
+        Parameters:
+        - image: Imagen en la que se dibujarán los bounding boxes.
+        - bboxes: Lista de diccionarios con las claves 'class', 'bbox', 'distance', 'angle', y 'conf'.
+                Cada 'bbox' es una tupla (x, y, w, h).
+        """
+        for bbox_info in bboxes:
+            x, y, w, h = bbox_info['bbox']
+            class_name = bbox_info['class']
+            distance = bbox_info['distance']
+            angle = bbox_info['angle']
+            conf = bbox_info['conf']
+            
+            top_left = (x, y)
+            bottom_right = (x + w, y + h)
+            
+            # Dibujar el rectángulo del bbox
+            cv2.rectangle(image, top_left, bottom_right, (255, 0, 0), 2)
+            
+            # Preparar los textos
+            class_text = f"{class_name} ({conf:.2f})"
+            angle_text = f"A: {angle:.2f}°"
+            distance_text = f"D: {distance:.2f}m"
+            
+            # Calcular las posiciones para los textos
+            class_text_position = (x, y - 10 if y - 10 > 10 else y + 10)
+            angle_text_position = (x, y + h + 20 if y + h + 20 < image.shape[0] else y + h - 10)
+            distance_text_position = (x, y + h + 40 if y + h + 40 < image.shape[0] else y + h + 10)
+            
+            # Dimensiones del texto
+            (class_w, class_h), _ = cv2.getTextSize(class_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+            (angle_w, angle_h), _ = cv2.getTextSize(angle_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+            (distance_w, distance_h), _ = cv2.getTextSize(distance_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+            
+            # Fondo para el texto
+            cv2.rectangle(image, (x, y - class_h - 10), (x + class_w, y), (255, 0, 0), -1)
+            cv2.rectangle(image, (x, y + h + 10), (x + max(angle_w, distance_w), y + h + 10 + angle_h + distance_h + 10), (255, 0, 0), -1)
+            
+            # Poner los textos en la imagen
+            cv2.putText(image, class_text, class_text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+            cv2.putText(image, angle_text, angle_text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+            cv2.putText(image, distance_text, distance_text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        
+        cv2.imshow('YOLOv8 Detections', image)
 
     @staticmethod
     def save_bbox_to_csv(detections, point_cloud_value):

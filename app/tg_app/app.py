@@ -157,17 +157,18 @@ def main():
 
             if detections:
                 relative_position.calculate_ubication(detections, point_cloud, equalized_image)
+                relative_position.draw_bboxes(equalized_image, detections )
 
-                for det in detections:
-                    print(det)
-                    label = int(det["class"])
-                    prob = det["conf"]
-                    x, y, w, h = det["bbox"]
-                    cv2.rectangle(equalized_image, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                    cv2.putText(equalized_image, f"{label} {prob:.2f}", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
-                    x_t = int(x + w / 2)
-                    y_t = int(y + h / 2)
-                    relative_position.draw_ubication(equalized_image, det['distance'], det['angle'], x_t, y_t)
+                # for det in detections:
+                #     print(det)
+                #     label = int(det["class"])
+                #     prob = det["conf"]
+                #     x, y, w, h = det["bbox"]
+                #     cv2.rectangle(equalized_image, (x, y), (x+w, y+h), (255, 0, 0), 2)
+                #     cv2.putText(equalized_image, f"{label} {prob:.2f}", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+                #     x_t = int(x + w / 2)
+                #     y_t = int(y + h / 2)
+                #     relative_position.draw_ubication(equalized_image, det['distance'], det['angle'], x_t, y_t)
 
 
 
@@ -197,7 +198,7 @@ def main():
 
 
 
-            cv2.imshow('YOLOv8 Detections', equalized_image)
+            
             
             if cv2.waitKey(30) >= 0:
                 break
