@@ -25,7 +25,7 @@ class Ubication:
         :param image: Imagen en la que se dibujarán los resultados.
         """
         for detection in detections:
-            distance, point, x, y = self.calcular_distancia_mediana(point_cloud, detection['bbox'])
+            distance, point = self.calcular_distancia_mediana(point_cloud, detection['bbox'])
             angle_degrees = self._calculate_angle(point)
             
             detection['distance'] = distance
@@ -45,8 +45,6 @@ class Ubication:
         x_min, y_min, width, height = map(int, bbox)
         x_max = x_min + width
         y_max = y_min + height
-        x = int(x_min + width / 2)
-        y = int(y_min + height / 2)
         
         # Recortar la nube de puntos usando el bbox, ignorando la cuarta dimensión
         cropped_arr = point_cloud[y_min:y_max, x_min:x_max, :3]
@@ -70,7 +68,7 @@ class Ubication:
         distancia_minima = distancias_filtradas[min_index]
         punto_minimo = valid_points[min_index]
         
-        return distancia_minima, punto_minimo, x, y
+        return distancia_minima, punto_minimo
 
     def _calculate_angle(self, point):
         """

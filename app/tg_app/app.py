@@ -54,7 +54,7 @@ def main():
 
     #Local planer
     max_distance = dict_planer["Maximun_distance"]#10
-    min_distance = 0
+    min_distance = 0.1
 
     fileName = "app/config/yolov5/yolov5_params.yaml"
     _, dict_yolo = miyaml.yaml_to_dict_general(fileName, parents=False)

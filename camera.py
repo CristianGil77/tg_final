@@ -122,7 +122,7 @@ def main() :
     init = sl.InitParameters(input_t=input_type)
     init.camera_resolution = sl.RESOLUTION.HD720
     #init.camera_resolution = sl.RESOLUTION.HD1080
-    init.depth_mode = sl.DEPTH_MODE.NEURAL
+    init.depth_mode = sl.DEPTH_MODE.ULTRA
     init.coordinate_units = sl.UNIT.MILLIMETER
   
 
@@ -138,6 +138,7 @@ def main() :
 
     # Set runtime parameters after opening the camera
     runtime = sl.RuntimeParameters()
+    runtime.confidence_threshold = 25
     #runtime.sensing_mode = sl.SENSING_MODE.FILL
 
     # Prepare new image size to retrieve half-resolution images
