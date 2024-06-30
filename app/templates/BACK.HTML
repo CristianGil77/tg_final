@@ -1,0 +1,15 @@
+{% for form_to_render in form_to_render[2] %}
+<div class="d-flex row pt-3">
+  <div class="col-12">
+    {% if form_to_render[1] %}
+    {{macros.render_form(module,form_to_render[1])}}
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+
+
+            {% if form_to_render[1] %}
+            {{macros.render_form(module,form_to_render[1])}}
+            {% endif %}

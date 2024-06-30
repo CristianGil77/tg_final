@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% import 'forms.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+{{ super() }}
+Settings
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+  <div class="setting-dashboard-container">
+    <div class="d-flex row">
+      <div class="col-12">
+        <div class="setting-dashboard-title pb-3 fs-3">
+          {{form_name}}
+        </div>
+        {% if form_to_render %}
+        {{macros.render_form(module,form_to_render)}}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

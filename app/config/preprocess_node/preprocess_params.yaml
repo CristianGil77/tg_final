@@ -1,0 +1,17 @@
+use_blur_filter: true                                     # if True, the images with blur are "removed"
+use_hist_equ: false
+use_clahe: true
+
+                                   # if True, the input images are equalized
+blur_threshold: 100
+clahe_clip_limit: 2.0
+clahe_tile_grid_size: 8
+
+
+
+max_angle: 20
+                                     # In degrees. The maximum angle difference / head inclination before the filter of images
+#num_samples: 10                                            # The number of samples to use for the initial reference of the Imu / TF tree
+
+
+

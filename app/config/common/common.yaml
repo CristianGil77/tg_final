@@ -1,0 +1,27 @@
+# Parametros comunes a la aplicacion en ROS1
+#
+
+
+#general
+user_height: 1.8
+# use_detection: false                        # if True, the detection mode is activated                 
+# use_planning: false                          # if True, the local planner mode is activated
+
+#use_steps: false
+steps: 0.4
+
+use_imu: false
+feedback_mode: 1                       # 1,2,3,4
+
+
+#detection 
+#detection_msg_period: 0.5                 # Time in seconds (NO ESTA SIENDO USADO AUN)
+
+#Audio
+audio_speed: 1.0
+#audio_lenght: 2
+#audio_language: 1                     # 0: English, 1: Spanish, 2: French, 3: German 
+#send_pasos: false
+
+#Otros
+bluetooth_addres: 00:42:79:3F:D8:8F

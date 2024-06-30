@@ -1,0 +1,19 @@
+# 
+#
+
+#height:                        1.7
+
+
+#Voxel
+LeafSize:                       0.2  
+
+
+#RadiusOutlierRemoval 
+RadiusSearch:                   0.8                  
+MinNeighborsInRadius:           200       
+
+
+# Cluster
+ClusterTolerance:               0.05
+MinClusterSize:                 200
+MaxClusterSize:                 1000

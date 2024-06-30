@@ -1,0 +1,17 @@
+click
+dominate==2.7.0
+Flask
+Flask-Bootstrap==3.3.7.1
+Flask-WTF==1.0.1
+gunicorn==20.1.0
+honcho==1.1.0
+importlib-metadata
+itsdangerous
+Jinja2
+MarkupSafe
+ruamel.yaml==0.17.21
+ruamel.yaml.clib==0.2.6
+visitor==0.1.3
+Werkzeug
+WTForms
+zipp

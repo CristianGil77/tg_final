@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% import 'forms.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+{{ super() }}
+Advanced
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+  <div class="setting-dashboard-container pt-2">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+          type="button" role="tab" aria-controls="nav-home" aria-selected="true"
+          onclick="setFormActive('Home')">
+          <p class="fw-bold fs-6">Home</p>
+        </button>
+        {% for form_name in forms_name %}
+        <button class="nav-link" id="nav-{{form_name[0]}}-tab" data-bs-toggle="tab" data-bs-target="#nav-{{form_name[0]}}" type="button" role="tab" aria-controls="nav-{{form_name[0]}}" aria-selected="true" onclick="setFormActive('{{form_name[0]}}')">
+          <p class="fw-bold fs-6">{{form_name[1]}}</p>
+        </button>
+        {% endfor %}
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+        aria-labelledby="nav-home-tab">
+        <div class="d-flex row pt-3 justify-content-center h-50">
+          <div class="col-2 align-content-center flex-wrap text-center warning-icon pt-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-exclamation-octagon"
+              viewBox="0 0 16 16">
+              <path
+                d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z" />
+              <path
+                d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+            </svg>
+          </div>
+          <div class="d-flex col-8 align-content-center flex-wrap">
+            <p class="setting-dashboard-title px-5 pt-5 text-center w-100 fw-bold">Advanced settings area</p>
+            <p class="px-5 text-center fs-4">Be careful with the parameter settings,<strong>this could cause system failure.</strong></p>
+          </div>
+          
+        </div>
+      </div>
+      {% for form_to_render in forms_to_render %}
+      <div class="tab-pane fade" id="nav-{{form_to_render[0]}}" role="tabpanel" aria-labelledby="nav-{{form_to_render[0]}}-tab">
+        {% if form_to_render[1][0] %}
+          {% for subform_to_render in form_to_render[1] %}
+          <div class="d-flex row pt-3">
+            <p class="fs-5 fw-bold">{{subform_to_render[0]}}</p>
+            <div class="col-12">
+              {{macros.render_form(module,subform_to_render[1])}}
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+        <div class="d-flex row pt-3">
+          <div class="col-12">
+            {% if form_to_render[1] %}
+              {{macros.render_form(module,form_to_render[1])}}
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

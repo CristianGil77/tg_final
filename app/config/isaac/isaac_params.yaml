@@ -1,0 +1,19 @@
+# Parametros para mapa de disparidad y creacion de nubes de puntos
+#
+
+/**:
+  ros__parameters:
+
+    general:
+      left_image_topic: /zedm/zed_node/left/image_rect_color
+      left_camera_info_topic: /zedm/zed_node/left/camera_info
+      right_image_topic: /zedm/zed_node/right/image_rect_color
+      right_camera_info_topic: /zedm/zed_node/right/camera_info
+
+    disparity:
+      backends: CUDA                                        # The VPI backend to use, which is CUDA by default (options: "CUDA", "XAVIER", "ORIN")
+      max_disparity: 64                                            # The maximum value for disparity per pixel, which is 64 by default. With ORIN backend, this value must be 128 or 256.
+      min_perc: 0.2
+
+    pointclouds:
+      use_color: true                                                              # Whether or not the output point cloud should have color.

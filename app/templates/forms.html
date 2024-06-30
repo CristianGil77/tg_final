@@ -1,0 +1,63 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+{% macro render_form(module,form_to_render) %}
+<form action="{{url_for(module)}}" method="post" class="form px-5 row d-flex" id="yolo">
+  <div class="d-block col-8">
+  {% for item in form_to_render %}
+    <div class="form-group">
+      <div class="row align-items-center justify-content-center">
+        {% if item.type == 'BooleanField' %}
+        {% elif item.type == 'HiddenField' %}
+        <div class="col-4">
+          {{item}}
+        </div>
+        {% elif item.type == 'SubmitField' %}
+        <div class="col-4 m-4 ps-4">
+          <input class="btn me-2" id="reset" name="reset" type="reset" value="Reset">
+        </div>
+        <div class="col-4 m-4 pe-4">
+          {{item(class='btn')|safe}}
+        </div>
+        {% elif item.id == 'csrf_token' %}
+        <div class="m-0 p-0">{{item}}</div>
+        {% else %}
+        <div class="col-12 mt-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dot"
+          viewBox="0 0 16 16">
+          <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+        </svg>{{item.label(class='form-label')}}</div>
+        <div class="col-3"></div>
+        <div class="col-1 p-0 m-0 text-end">
+          <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-input-cursor-text"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M5 2a.5.5 0 0 1 .5-.5c.862 0 1.573.287 2.06.566.174.099.321.198.44.286.119-.088.266-.187.44-.286A4.165 4.165 0 0 1 10.5 1.5a.5.5 0 0 1 0 1c-.638 0-1.177.213-1.564.434a3.49 3.49 0 0 0-.436.294V7.5H9a.5.5 0 0 1 0 1h-.5v4.272c.1.08.248.187.436.294.387.221.926.434 1.564.434a.5.5 0 0 1 0 1 4.165 4.165 0 0 1-2.06-.566A4.561 4.561 0 0 1 8 13.65a4.561 4.561 0 0 1-.44.285 4.165 4.165 0 0 1-2.06.566.5.5 0 0 1 0-1c.638 0 1.177-.213 1.564-.434.188-.107.335-.214.436-.294V8.5H7a.5.5 0 0 1 0-1h.5V3.228a3.49 3.49 0 0 0-.436-.294A3.166 3.166 0 0 0 5.5 2.5.5.5 0 0 1 5 2z" />
+            <path
+              d="M10 5h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4v1h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-4v1zM6 5V4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v-1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4z" />
+          </svg></span>
+        </div>
+        <div class="col-4 wrapper-input">{{item(class='input--style-2')|safe}}</div>
+        <div class="col-4"><span class="form-text">{{ item.description|safe }}</span></div>
+        {% endif %}
+      </div>
+      {% if item.errors %}
+      <span class="error help-inline">{{ item.errors|join(', ') }}</span>
+      {% endif %}
+    </div>
+  {% endfor %}
+  </div>
+  <div class="d-block col-4 ">
+  {% for item in form_to_render %}
+    {% if item.type == 'BooleanField' %}
+    <div class="form-group my-2">
+      <div class="row">
+        <div class="col-12 ps-5 align-items-center">
+          {{item(class='form-check-input mx-2', value='true')|safe}}
+          {{item.label(class='form-check-label pt-3')}}
+        </div>
+      </div>
+    </div>
+    <hr>
+    {% endif %}
+  {% endfor %}
+  </div>
+</form>
+{% endmacro %}
