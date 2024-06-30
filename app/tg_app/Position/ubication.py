@@ -98,7 +98,7 @@ class Ubication:
 
 
 
-    def draw_bboxes(self, image, bboxes):
+    def draw_bboxes(self, image, bboxes, clases):
         """
         Dibuja múltiples bounding boxes en la imagen con el nombre de la clase, la distancia, el ángulo y la confianza.
 
@@ -109,7 +109,7 @@ class Ubication:
         """
         for bbox_info in bboxes:
             x, y, w, h = bbox_info['bbox']
-            class_name = bbox_info['class']
+            class_name = clases[int(bbox_info['class'])]
             distance = bbox_info['distance']
             angle = bbox_info['angle']
             conf = bbox_info['conf']

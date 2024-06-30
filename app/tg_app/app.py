@@ -158,7 +158,7 @@ def main():
             if detections:
                 relative_position.calculate_ubication(detections, point_cloud, equalized_image)
                 print("dibujando...")
-                relative_position.draw_bboxes(equalized_image, detections )
+                relative_position.draw_bboxes(equalized_image, detections, clases )
 
                 # for det in detections:
                 #     print(det)
