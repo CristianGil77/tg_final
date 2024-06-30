@@ -136,9 +136,8 @@ class Ubication:
             distance_text_position = (x + 5, y + 5 + class_h + 5 + angle_h + 5 + distance_h)  # Debajo del texto del ángulo
             
             # Fondo para el texto
-            cv2.rectangle(image, (x, y - class_h - 10), (x + class_w, y), (255, 0, 0), -1)
-            cv2.rectangle(image, (x, y + h + 10), (x + max(angle_w, distance_w), y + h + 10 + angle_h + distance_h + 10), (255, 0, 0), -1)
-            
+            cv2.rectangle(image, (x, y), (x + max(class_w, angle_w, distance_w) + 10, y + class_h + angle_h + distance_h + 30), (255, 0, 0), -1)
+    
             # Poner los textos en la imagen
             cv2.putText(image, class_text, class_text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
             cv2.putText(image, angle_text, angle_text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
