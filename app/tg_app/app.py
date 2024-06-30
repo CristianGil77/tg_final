@@ -158,7 +158,7 @@ def main():
             if detections:
                 relative_position.calculate_ubication(detections, point_cloud, equalized_image)
                 print("dibujando...")
-                relative_position.draw_bboxes(equalized_image, detections )
+                image = relative_position.draw_bboxes(equalized_image, detections )
 
                 # for det in detections:
                 #     print(det)
@@ -200,7 +200,7 @@ def main():
 
 
             
-            
+            cv2.imshow('YOLOv8 Detections', image)
             if cv2.waitKey(30) >= 0:
                 break
 

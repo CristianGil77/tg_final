@@ -143,8 +143,9 @@ class Ubication:
             cv2.putText(image, class_text, class_text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
             cv2.putText(image, angle_text, angle_text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
             cv2.putText(image, distance_text, distance_text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-        
-        cv2.imshow('YOLOv8 Detections', image)
+
+        return image        
+
 
     @staticmethod
     def save_bbox_to_csv(detections, point_cloud_value):
