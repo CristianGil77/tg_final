@@ -12,6 +12,7 @@ from audio import DirectionalAudioGenerator as AudioGenerator
 from gui_yaml import WriteYaml
 import tensorrt as trt
 import os
+import open3d as o3d
 
 sys.path.append('app/tg_app/Inference/yolov8_cpp/build')
 import yolo_module as YOLOv8
@@ -148,6 +149,7 @@ def main():
             # Obtener ángulos, nube de puntos e imagen
             angles = zed_camera.get_imu_angles()
             point_cloud = zed_camera.capture_point_cloud()
+            
             image_ocv = zed_camera.capture_image()
 
             print("prueba de cgraficar los bbox")
@@ -160,6 +162,7 @@ def main():
                 print("dibujando...")
                 relative_position.draw_bboxes(equalized_image, detections, clases )
 
+                #############################################################################
                 # for det in detections:
                 #     print(det)
                 #     label = int(det["class"])

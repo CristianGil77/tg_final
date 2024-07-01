@@ -48,7 +48,7 @@ class ZEDCamera:
         # Configuración de parámetros de runtime
         self.runtime_params = sl.RuntimeParameters()
         self.runtime_params.sensing_mode = sensing_mode
-        self.runtime_params.confidence_threshold = 10
+        #self.runtime_params.confidence_threshold = 10
         #self.runtime_params.texture_confidence_threshold = 75
 
         self.image_size = self.zed.get_camera_information().camera_resolution
