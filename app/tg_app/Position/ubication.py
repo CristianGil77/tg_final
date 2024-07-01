@@ -96,8 +96,9 @@ class Ubication:
             print("no valid points after filtering")
             return None, None
 
-        centroide = np.mean(filtered_points, axis=0)
-        distancia = np.min(np.linalg.norm(filtered_points, axis=1))
+        centroide = np.median(filtered_points, axis=0)
+        #distancia = np.min(np.linalg.norm(filtered_points, axis=1))
+        distancia = np.linalg.norm(centroide)
         
         return distancia, centroide
 
