@@ -48,8 +48,8 @@ class Ubication:
         y_centro = (y_min + y_max) / 2.0
 
         # Calcular las nuevas dimensiones para encoger el bounding box al 50%
-        nuevo_ancho = width * 0.8
-        nuevo_alto = height * 0.8
+        nuevo_ancho = width * 0.75
+        nuevo_alto = height * 0.75
 
         # Calcular los nuevos límites del bounding box
         nuevo_x_min = int(x_centro - nuevo_ancho / 2.0)
@@ -96,8 +96,8 @@ class Ubication:
             print("no valid points after filtering")
             return None, None
 
-        centroide = np.median(filtered_points, axis=0)
-        distancia = np.linalg.norm(centroide)
+        centroide = np.mean(filtered_points, axis=0)
+        distancia = np.min(np.linalg.norm(filtered_points, axis=1))
         
         return distancia, centroide
 
