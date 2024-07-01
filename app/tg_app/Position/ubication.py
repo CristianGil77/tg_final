@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import pandas as pd
 import os
+from sklearn.cluster import DBSCAN
 
 class Ubication:
     def __init__(self, person_height, factor=0.289):
@@ -72,25 +73,21 @@ class Ubication:
             print("no valid points")
             return None, None
 
-        # Calcular el centroide de los puntos válidos
-        centroide = np.mean(valid_points, axis=0)
+        # Aplicar DBSCAN
+        dbscan = DBSCAN(eps=0.05, min_samples=10)  # Puedes ajustar estos parámetros según tus necesidades
+        labels = dbscan.fit_predict(valid_points)
 
-        # Calcular la distancia euclidiana de cada punto al centroide
-        distancias_al_centroide = np.linalg.norm(valid_points - centroide, axis=1)
+        # Filtrar puntos que no son considerados ruido (label != -1)
+        filtered_points = valid_points[labels != -1]
 
-        # Filtrar puntos que están cerca del centroide (por ejemplo, dentro de un radio de 0.5 metros)
-        radio = 0.5
-        puntos_cercanos = valid_points[distancias_al_centroide < radio]
+        if filtered_points.size == 0:
+            print("no valid points after filtering")
+            return None, None
 
-        # if puntos_cercanos.size == 0:
-        #     return None, None
-
-        # Calcular la distancia promedio de los puntos cercanos
-        distancias_puntos_cercanos = np.linalg.norm(puntos_cercanos, axis=1)
-        distancia_promedio = np.mean(distancias_puntos_cercanos)
-
-        return distancia_promedio, centroide
-    
+        centroide = np.mean(filtered_points, axis=0)
+        distancia = np.linalg.norm(centroide)
+        
+        return distancia, centroide
 
     def _calculate_angle(self, point):
         """
