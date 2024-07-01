@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import pandas as pd
 import os
-from sklearn.neighbors import LocalOutlierFactor
+
 
 class Ubication:
     def __init__(self, person_height, factor=0.289):
@@ -73,18 +73,21 @@ class Ubication:
             print("no valid points")
             return None, None
 
-        # Aplicar DBSCAN
-        lof = LocalOutlierFactor(n_neighbors=10)  # Puedes ajustar n_neighbors según tus necesidades
-        labels = lof.fit_predict(valid_points)
+        Q1 = np.percentile(valid_points, 25, axis=0)
+        Q3 = np.percentile(valid_points, 75, axis=0)
+        IQR = Q3 - Q1
 
-        # Filtrar puntos que no son considerados outliers (label != -1)
-        filtered_points = valid_points[labels != -1]
+        lower_bound = Q1 - 1.5 * IQR
+        upper_bound = Q3 + 1.5 * IQR
+
+        filtered_points = valid_points[(valid_points >= lower_bound) & (valid_points <= upper_bound)].all(axis=1)
+
 
         if filtered_points.size == 0:
             print("no valid points after filtering")
             return None, None
 
-        centroide = np.mean(filtered_points, axis=0)
+        centroide = np.median(filtered_points, axis=0)
         distancia = np.linalg.norm(centroide)
         
         return distancia, centroide
