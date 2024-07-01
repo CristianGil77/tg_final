@@ -47,8 +47,8 @@ class Ubication:
         y_centro = (y_min + y_max) / 2.0
 
         # Calcular las nuevas dimensiones para encoger el bounding box al 50%
-        nuevo_ancho = width / 2.0
-        nuevo_alto = height / 2.0
+        nuevo_ancho = width * 0.7
+        nuevo_alto = height * 0.7
 
         # Calcular los nuevos límites del bounding box
         nuevo_x_min = int(x_centro - nuevo_ancho / 2.0)
