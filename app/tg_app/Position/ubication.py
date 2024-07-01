@@ -83,8 +83,12 @@ class Ubication:
         lower_bound = Q1 - 1.5 * IQR
         upper_bound = Q3 + 1.5 * IQR
 
+        print(lower_bound)
+        print(upper_bound)
+
         # Filtrar puntos que están dentro de los límites
-        filtered_points = valid_points[(valid_points >= lower_bound) & (valid_points <= upper_bound)]
+        conditions = np.all((valid_points >= lower_bound) & (valid_points <= upper_bound), axis=1)
+        filtered_points = valid_points[conditions]
         print(filtered_points.shape)
         
 
@@ -92,7 +96,7 @@ class Ubication:
             print("no valid points after filtering")
             return None, None
 
-        centroide = np.median(filtered_points)
+        centroide = np.median(filtered_points, axis=0)
         distancia = np.linalg.norm(centroide)
         
         return distancia, centroide
