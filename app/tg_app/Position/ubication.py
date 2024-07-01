@@ -26,10 +26,14 @@ class Ubication:
         """
         for detection in detections:
             distance, point = self.calcular_distancia_mediana(point_cloud, detection['bbox'])
-            angle_degrees = self._calculate_angle(point)
-            
-            detection['distance'] = distance
-            detection['angle'] = angle_degrees
+            if point is not None:
+                angle_degrees = self._calculate_angle(point)
+                detection['distance'] = distance
+                detection['angle'] = angle_degrees
+                # self.draw_ubication(image, distance, angle_degrees, x, y)
+            else:
+                detection['distance'] = None
+                detection['angle'] = None
 
             #self.draw_ubication(image, distance, angle_degrees, x, y)
 
@@ -83,7 +87,7 @@ class Ubication:
 
         return distancia_promedio, centroide
     
-    
+
     def _calculate_angle(self, point):
         """
         Calcula el ángulo utilizando el punto medio del bounding box en el mapa de disparidad.
