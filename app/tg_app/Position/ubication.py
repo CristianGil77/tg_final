@@ -85,14 +85,14 @@ class Ubication:
 
         # Filtrar puntos que están dentro de los límites
         filtered_points = valid_points[(valid_points >= lower_bound) & (valid_points <= upper_bound)]
-        print(flattened_arr.shape)
+        print(filtered_points.shape)
         
 
         if filtered_points.size == 0:
             print("no valid points after filtering")
             return None, None
 
-        centroide = np.median(filtered_points, axis=0)
+        centroide = np.median(filtered_points)
         distancia = np.linalg.norm(centroide)
         
         return distancia, centroide
