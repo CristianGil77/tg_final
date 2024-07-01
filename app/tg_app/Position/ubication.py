@@ -34,42 +34,56 @@ class Ubication:
             #self.draw_ubication(image, distance, angle_degrees, x, y)
 
     def calcular_distancia_mediana(self, point_cloud, bbox):
-        """
-        Calcula la distancia del objeto basada en la mediana del primer y tercer cuartil
-        de las distancias en la nube de puntos recortada por el bbox.
-
-        :param point_cloud: Nube de puntos (numpy array) de dimensiones 1280x720x4.
-        :param bbox: Bounding box (tupla) con coordenadas (x, y, w, h).
-        :return: Distancia del objeto calculada a partir de la mediana del primer y tercer cuartil.
-        """
         x_min, y_min, width, height = map(int, bbox)
         x_max = x_min + width
         y_max = y_min + height
-        
-        # Recortar la nube de puntos usando el bbox, ignorando la cuarta dimensión
-        cropped_arr = point_cloud[y_min:y_max, x_min:x_max, :3]
-        
+
+        # Calcular el centro del bounding box original
+        x_centro = (x_min + x_max) / 2.0
+        y_centro = (y_min + y_max) / 2.0
+
+        # Calcular las nuevas dimensiones para encoger el bounding box al 50%
+        nuevo_ancho = width / 2.0
+        nuevo_alto = height / 2.0
+
+        # Calcular los nuevos límites del bounding box
+        nuevo_x_min = int(x_centro - nuevo_ancho / 2.0)
+        nuevo_x_max = int(x_centro + nuevo_ancho / 2.0)
+        nuevo_y_min = int(y_centro - nuevo_alto / 2.0)
+        nuevo_y_max = int(y_centro + nuevo_alto / 2.0)
+
+        # Recortar la nube de puntos usando el nuevo bounding box, ignorando la cuarta dimensión
+        cropped_arr = point_cloud[nuevo_y_min:nuevo_y_max, nuevo_x_min:nuevo_x_max, :3]
+
         # Aplanar el arreglo para calcular distancias
         flattened_arr = cropped_arr.reshape(-1, cropped_arr.shape[-1])
 
-        print(flattened_arr.shape)
-
         # Eliminar filas con NaN en las primeras tres columnas
         valid_points = flattened_arr[~np.isnan(flattened_arr).any(axis=1)]
-        
-        # Calcular las distancias euclidianas ignorando la cuarta dimensión
-        distancias = np.sqrt(np.sum(valid_points**2, axis=1))
-        
-        q1 = np.percentile(distancias, 1)
 
-        distancias_filtradas = distancias[(distancias > q1)]
+        if valid_points.size == 0:
+            return None, None
 
-        min_index = np.argmin(distancias_filtradas)
-        distancia_minima = distancias_filtradas[min_index]
-        punto_minimo = valid_points[min_index]
-        
-        return distancia_minima, punto_minimo
+        # Calcular el centroide de los puntos válidos
+        centroide = np.mean(valid_points, axis=0)
 
+        # Calcular la distancia euclidiana de cada punto al centroide
+        distancias_al_centroide = np.linalg.norm(valid_points - centroide, axis=1)
+
+        # Filtrar puntos que están cerca del centroide (por ejemplo, dentro de un radio de 0.5 metros)
+        radio = 0.5
+        puntos_cercanos = valid_points[distancias_al_centroide < radio]
+
+        if puntos_cercanos.size == 0:
+            return None, None
+
+        # Calcular la distancia promedio de los puntos cercanos
+        distancias_puntos_cercanos = np.linalg.norm(puntos_cercanos, axis=1)
+        distancia_promedio = np.mean(distancias_puntos_cercanos)
+
+        return distancia_promedio, centroide
+    
+    
     def _calculate_angle(self, point):
         """
         Calcula el ángulo utilizando el punto medio del bounding box en el mapa de disparidad.
