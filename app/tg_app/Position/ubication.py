@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import pandas as pd
 import os
+from scipy.spatial.distance import mahalanobis
 
 
 class Ubication:
@@ -73,29 +74,26 @@ class Ubication:
             print("no valid points")
             return None, None
 
-        Q1 = np.percentile(valid_points, 25, axis=0)
-        Q3 = np.percentile(valid_points, 75, axis=0)
-        IQR = Q3 - Q1
-        
+            # Calcular la media y la matriz de covarianza de los puntos válidos
+        mean = np.mean(valid_points, axis=0)
+        cov_matrix = np.cov(valid_points, rowvar=False)
+        inv_cov_matrix = np.linalg.inv(cov_matrix)
 
-        # Calcular los límites para filtrar outliers
-        lower_bound = Q1 - 1.5 * IQR
-        upper_bound = Q3 + 1.5 * IQR
+        # Calcular la distancia Mahalanobis para cada punto
+        distances = np.array([mahalanobis(point, mean, inv_cov_matrix) for point in valid_points])
 
-
-        # Filtrar puntos que están dentro de los límites
-        conditions = np.all((valid_points >= lower_bound) & (valid_points <= Q1), axis=1)
-        filtered_points = valid_points[conditions]
-        
+        # Determinar un umbral para identificar outliers (por ejemplo, percentil 97.5)
+        threshold = np.percentile(distances, 97.5)
+        filtered_points = valid_points[distances < threshold]
 
         if filtered_points.size == 0:
             print("no valid points after filtering")
             return None, None
 
+        # Calcular el centroide de los puntos válidos
         centroide = np.median(filtered_points, axis=0)
-        #distancia = np.min(np.linalg.norm(filtered_points, axis=1))
         distancia = np.linalg.norm(centroide)
-        
+
         return distancia, centroide
 
     def _calculate_angle(self, point):
