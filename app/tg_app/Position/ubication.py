@@ -2,7 +2,6 @@ import numpy as np
 import cv2
 import pandas as pd
 import os
-from scipy.spatial.distance import mahalanobis
 
 
 class Ubication:
@@ -61,39 +60,42 @@ class Ubication:
         # Recortar la nube de puntos usando el nuevo bounding box, ignorando la cuarta dimensión
         cropped_arr = point_cloud[nuevo_y_min:nuevo_y_max, nuevo_x_min:nuevo_x_max, :3]
 
+        print(cropped_arr.shape)
         # Aplanar el arreglo para calcular distancias
-        flattened_arr = cropped_arr.reshape(-1, cropped_arr.shape[-1])        
+        flattened_arr = cropped_arr.reshape(-1, cropped_arr.shape[-1])
+        print(flattened_arr.shape)
 
         # Eliminar filas con NaN en las primeras tres columnas
         valid_points = flattened_arr[~np.isnan(flattened_arr).any(axis=1)]
-
         valid_points = valid_points[np.isfinite(valid_points).all(axis=1)]
 
 
         if valid_points.size == 0:
             print("no valid points")
             return None, None
+        
+        centroide = np.median(valid_points, axis=0)
+        distancias = np.linalg.norm(valid_points, axis=1)
 
-            # Calcular la media y la matriz de covarianza de los puntos válidos
-        mean = np.mean(valid_points, axis=0)
-        cov_matrix = np.cov(valid_points, rowvar=False)
-        inv_cov_matrix = np.linalg.inv(cov_matrix)
 
-        # Calcular la distancia Mahalanobis para cada punto
-        distances = np.array([mahalanobis(point, mean, inv_cov_matrix) for point in valid_points])
+        Q1 = np.percentile(distancias, 25)
+        Q3 = np.percentile(distancias, 75)
+        IQR = Q3 - Q1
 
-        # Determinar un umbral para identificar outliers (por ejemplo, percentil 97.5)
-        threshold = np.percentile(distances, 97.5)
-        filtered_points = valid_points[distances < threshold]
+        # Calcular los límites para filtrar outliers
+        lower_bound = Q1 - 1.5 * IQR
+        upper_bound = Q3 + 1.5 * IQR
+
+
+        filtered_points = distancias[(distancias >= lower_bound) & (distancias <= Q1)]
 
         if filtered_points.size == 0:
             print("no valid points after filtering")
             return None, None
 
-        # Calcular el centroide de los puntos válidos
-        centroide = np.median(filtered_points, axis=0)
-        distancia = np.linalg.norm(centroide)
+        distancia = np.median(filtered_points)
 
+        
         return distancia, centroide
 
     def _calculate_angle(self, point):
