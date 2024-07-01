@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import pandas as pd
 import os
-from sklearn.cluster import DBSCAN
+from sklearn.neighbors import LocalOutlierFactor
 
 class Ubication:
     def __init__(self, person_height, factor=0.289):
@@ -74,10 +74,10 @@ class Ubication:
             return None, None
 
         # Aplicar DBSCAN
-        dbscan = DBSCAN(eps=0.05, min_samples=10)  # Puedes ajustar estos parámetros según tus necesidades
-        labels = dbscan.fit_predict(valid_points)
+        lof = LocalOutlierFactor(n_neighbors=10)  # Puedes ajustar n_neighbors según tus necesidades
+        labels = lof.fit_predict(valid_points)
 
-        # Filtrar puntos que no son considerados ruido (label != -1)
+        # Filtrar puntos que no son considerados outliers (label != -1)
         filtered_points = valid_points[labels != -1]
 
         if filtered_points.size == 0:
