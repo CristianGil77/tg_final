@@ -79,6 +79,8 @@ class Ubication:
         Q3 = np.percentile(valid_points, 75, axis=0)
         IQR = Q3 - Q1
 
+        print(Q1)
+
         # Calcular los límites para filtrar outliers
         lower_bound = Q1 - 1.5 * IQR
         upper_bound = Q3 + 1.5 * IQR
@@ -87,7 +89,7 @@ class Ubication:
         print(upper_bound)
 
         # Filtrar puntos que están dentro de los límites
-        conditions = np.all((valid_points >= lower_bound) & (valid_points <= upper_bound), axis=1)
+        conditions = np.all((valid_points >= lower_bound) & (valid_points <= Q1), axis=1)
         filtered_points = valid_points[conditions]
         print(filtered_points.shape)
         
