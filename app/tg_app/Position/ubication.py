@@ -94,9 +94,9 @@ class Ubication:
         print(filtered_points.shape)
         
 
-        if filtered_points.size == 0:
-            print("no valid points after filtering")
-            return None, None
+        # if filtered_points.size == 0:
+        #     print("no valid points after filtering")
+        #     return None, None
 
         centroide = np.median(filtered_points, axis=0)
         #distancia = np.min(np.linalg.norm(filtered_points, axis=1))
