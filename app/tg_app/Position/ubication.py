@@ -60,10 +60,8 @@ class Ubication:
         # Recortar la nube de puntos usando el nuevo bounding box, ignorando la cuarta dimensión
         cropped_arr = point_cloud[nuevo_y_min:nuevo_y_max, nuevo_x_min:nuevo_x_max, :3]
 
-        print(cropped_arr.shape)
         # Aplanar el arreglo para calcular distancias
-        flattened_arr = cropped_arr.reshape(-1, cropped_arr.shape[-1])
-        print(flattened_arr.shape)
+        flattened_arr = cropped_arr.reshape(-1, cropped_arr.shape[-1])        
 
         # Eliminar filas con NaN en las primeras tres columnas
         valid_points = flattened_arr[~np.isnan(flattened_arr).any(axis=1)]
@@ -84,14 +82,10 @@ class Ubication:
         lower_bound = Q1 - 1.5 * IQR
         upper_bound = Q3 + 1.5 * IQR
 
-        print(lower_bound)
-        print(upper_bound)
-        print("Q1: ", Q1)
 
         # Filtrar puntos que están dentro de los límites
-        conditions = np.all((valid_points >= lower_bound) & (valid_points <= upper_bound), axis=1)
+        conditions = np.all((valid_points >= lower_bound) & (valid_points <= Q1), axis=1)
         filtered_points = valid_points[conditions]
-        print(filtered_points.shape)
         
 
         if filtered_points.size == 0:
