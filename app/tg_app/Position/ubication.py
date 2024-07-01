@@ -66,6 +66,7 @@ class Ubication:
         valid_points = flattened_arr[~np.isnan(flattened_arr).any(axis=1)]
 
         if valid_points.size == 0:
+            print("no valid points")
             return None, None
 
         # Calcular el centroide de los puntos válidos
@@ -78,8 +79,8 @@ class Ubication:
         radio = 0.5
         puntos_cercanos = valid_points[distancias_al_centroide < radio]
 
-        if puntos_cercanos.size == 0:
-            return None, None
+        # if puntos_cercanos.size == 0:
+        #     return None, None
 
         # Calcular la distancia promedio de los puntos cercanos
         distancias_puntos_cercanos = np.linalg.norm(puntos_cercanos, axis=1)
