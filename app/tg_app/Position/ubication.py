@@ -86,6 +86,7 @@ class Ubication:
 
         print(lower_bound)
         print(upper_bound)
+        print("Q1: ", Q1)
 
         # Filtrar puntos que están dentro de los límites
         conditions = np.all((valid_points >= lower_bound) & (valid_points <= upper_bound), axis=1)
