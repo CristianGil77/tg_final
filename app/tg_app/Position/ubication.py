@@ -47,8 +47,8 @@ class Ubication:
         y_centro = (y_min + y_max) / 2.0
 
         # Calcular las nuevas dimensiones para encoger el bounding box al 50%
-        nuevo_ancho = width * 0.7
-        nuevo_alto = height * 0.7
+        nuevo_ancho = width * 0.8
+        nuevo_alto = height * 0.8
 
         # Calcular los nuevos límites del bounding box
         nuevo_x_min = int(x_centro - nuevo_ancho / 2.0)
@@ -64,6 +64,9 @@ class Ubication:
 
         # Eliminar filas con NaN en las primeras tres columnas
         valid_points = flattened_arr[~np.isnan(flattened_arr).any(axis=1)]
+
+        valid_points = valid_points[np.isfinite(valid_points).all(axis=1)]
+
 
         if valid_points.size == 0:
             print("no valid points")
