@@ -6,7 +6,7 @@ weights: y8_416.engine
 #data: data.yaml
 confidence_threshold: 0.2
 iou_threshold: 0.1
-topk: 100
+topk: 150
 
 inference_size_: 416
 

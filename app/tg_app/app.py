@@ -154,7 +154,7 @@ def main():
 
             print("prueba de cgraficar los bbox")
             ###############################################################################
-            equalized_image = preprocessing.equalize_histogram(image_ocv)
+            equalized_image = preprocessing.apply_clahe(image_ocv)
             detections = model.process_frame(equalized_image)
 
             if detections:
