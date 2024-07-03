@@ -152,14 +152,12 @@ def main():
             
             image_ocv = zed_camera.capture_image()
 
-            print("prueba de cgraficar los bbox")
             ###############################################################################
             equalized_image = preprocessing.apply_clahe(image_ocv)
             detections = model.process_frame(equalized_image)
 
             if detections:
                 relative_position.calculate_ubication(detections, point_cloud, equalized_image)
-                print("dibujando...")
                 sorted_detections = sorted(detections, key=lambda x: x['distance'])
                 print("clase más cercana;", sorted_detections[0]['class'], end='\r')
 
