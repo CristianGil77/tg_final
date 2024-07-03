@@ -158,9 +158,15 @@ def main():
 
             if detections:
                 relative_position.calculate_ubication(detections, point_cloud, equalized_image)
+                
                 sorted_detections = sorted(detections, key=lambda x: x['distance'])
-                print("clase más cercana;", sorted_detections[0]['class'], end='\r')
+                print("Todas las detecciones:")
+                for det in detections:
+                    print(clases[int(det["class"])])
 
+                print("clase más cercana;", clases[int(sorted_detections[0]["class"])])
+                print("############################################")
+                os.system('clear')
                 relative_position.draw_bboxes(equalized_image, detections, clases )
 
                 #############################################################################
