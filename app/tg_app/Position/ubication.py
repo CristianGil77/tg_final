@@ -60,10 +60,8 @@ class Ubication:
         # Recortar la nube de puntos usando el nuevo bounding box, ignorando la cuarta dimensión
         cropped_arr = point_cloud[nuevo_y_min:nuevo_y_max, nuevo_x_min:nuevo_x_max, :3]
 
-        print(cropped_arr.shape)
         # Aplanar el arreglo para calcular distancias
         flattened_arr = cropped_arr.reshape(-1, cropped_arr.shape[-1])
-        print(flattened_arr.shape)
 
         # Eliminar filas con NaN en las primeras tres columnas
         valid_points = flattened_arr[~np.isnan(flattened_arr).any(axis=1)]
