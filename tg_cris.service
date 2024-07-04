@@ -1,0 +1,13 @@
+[Unit]
+Description=My Python Script
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/gelbert2/Documents/cristian_tg/scr4/Gelbert/main.py
+WorkingDirectory=/home/gelbert2/Documents/cristian_tg/scr4/Gelbert
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+

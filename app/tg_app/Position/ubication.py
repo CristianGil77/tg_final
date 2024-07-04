@@ -147,7 +147,7 @@ class Ubication:
             # Preparar los textos
             class_text = f"{class_name} ({conf:.2f})"
             angle_text = f"A: {angle:.2f}"
-            distance_text = f"D: {distance:.2f}m"
+            distance_text = f"D: {distance:.2f} pasos"
             
             # Dimensiones del texto
             (class_w, class_h), _ = cv2.getTextSize(class_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)

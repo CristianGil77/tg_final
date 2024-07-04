@@ -166,7 +166,7 @@ class DirectionalAudioGenerator:
                 beep_sequence.append(beep_audio)
 
                 if _ < n_beeps - 1:
-                    silence_wave = AudioSegment.silent(duration=50*velocidad)
+                    silence_wave = AudioSegment.silent(duration=80*velocidad)
                     beep_sequence.append(silence_wave)
 
             # Concatena todos los bips en la secuencia

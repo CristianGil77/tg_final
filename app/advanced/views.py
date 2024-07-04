@@ -61,6 +61,7 @@ def advance():
             del data['current_form']
             yaml = WriteYaml()
             success, msg = yaml.dict_to_yaml(file_name, data)
+            print("Hola")
             context['success'] = success
             context['success_text'] = msg
 
@@ -110,7 +111,7 @@ def advance():
             file_name = 'config/zed_wrapper/common.yaml'
             file_name2 = '/home/gelbert2/dev_ws/src/slam/zed-ros2-wrapper/zed_wrapper/config/common.yaml'
             data = request.form.to_dict()
-            del data['resolution']
+            #del data['resolution']
             del data['csrf_token']
             del data['current_form']
             del data['submit']

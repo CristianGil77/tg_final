@@ -1,3 +1,3 @@
-resolution: 3                                                         # '0': HD2K, '1': HD1080, '2': HD720, '3': VGA
+resolution: 2                                                         # '0': HD2K, '1': HD1080, '2': HD720, '3': VGA
 quality: 3                                                            # '0': NONE, '1': PERFORMANCE, '2': QUALITY, '3': ULTRA - '4': NEURAL - Note: if '0' all the modules that requires depth extraction are disabled by default (Pos. Tracking, Obj. Detection, Mapping, ...)
 sensing_mode: 1                                                       # '0': STANDARD, '1': FILL

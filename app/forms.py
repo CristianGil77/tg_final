@@ -52,7 +52,7 @@ class CommonForm(FlaskForm):
 
     audio_speed = DecimalField(
         'Audio Speed', places=1,
-        validators=[InputRequired(), AnyOf(values=[1,2])],
+        validators=[InputRequired(), NumberRange(min=0.5, max=2.5)],
         default=dict_common["audio_speed"], description="1: slow, 2: fast")  # Time in seconds (NO ESTA SIENDO USADO AUN)
     
     feedback_mode = DecimalField(
@@ -95,7 +95,7 @@ class PlannerForm(FlaskForm):
     
     Maximun_distance = DecimalField(
         'Maximum distance', places=1,
-        validators=[InputRequired(), NumberRange(min=2.5, max=4)],
+        validators=[InputRequired(), NumberRange(min=2.5, max=10)],
         default=float(dict_["Maximun_distance"]), description="Distance in meters to search free space and calculate paths.")
     current_form = HiddenField('current_form', render_kw={"value": "planner_form"})
     submit = SubmitField('Update')  # Submit Button
@@ -114,12 +114,12 @@ class YoloForm(FlaskForm):
     bool_, dict_ = miyaml.yaml_to_dict_general(fileName, parents=False)
 
     if not bool_:
-        dict_["confidence_threshold"] = '0.25'
+        dict_["confidence_threshold"] = 0.25
         dict_["weights"] = "Yolov5_S_Freeze_subir4_pto_simpl_half.engine"
         dict_["data"] = 'data.yaml'
-        dict_["iou_threshold"] = '0.45'
+        dict_["iou_threshold"] = 0.45
         dict_["topk"] = 10
-        dict_["inference_size_"] = '416'
+        dict_["inference_size_"] = 416
         #dict_["input_image_topic"] = '/zedm/zed_node/left/image_rect_color'
     
     weights = StringField(
@@ -147,7 +147,7 @@ class YoloForm(FlaskForm):
     
     topk = DecimalField(
         'Topk', places=1,
-        validators=[InputRequired(), NumberRange(min=5, max=100)],
+        validators=[InputRequired(), NumberRange(min=5, max=200)],
         default=int(dict_["topk"]))
 
     # input_image_topic = StringField(
@@ -327,9 +327,9 @@ class ZedcommonForm(FlaskForm):
     bool_, dict_ = miyaml.yaml_to_dict_general(fileName, parents=False)
     
     if not bool_:
-        dict_["resolution"] = True
-        dict_["quality"] = False
-        dict_["sensing_mode"] = False
+        dict_["resolution"] = 3
+        dict_["quality"] = 3
+        dict_["sensing_mode"] = 1
 
 
     resolution = DecimalField(

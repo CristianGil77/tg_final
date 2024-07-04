@@ -6,4 +6,4 @@ AREA_WIDTH: '2'      # potential area width [m]
 # the number of previous positions used to check oscillations
 OSCILLATIONS_DETECTION_LENGTH: '3'
 
-Maximun_distance: 10  #Distance in meters to search free space and calculate paths 
+Maximun_distance: 9   #Distance in meters to search free space and calculate paths 
