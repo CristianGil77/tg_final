@@ -118,7 +118,7 @@ class DirectionalAudioGenerator:
         play(audio)
 
     
-    def generate_final_audio(self, detection):
+    def generate_final_audio(self, detection, velocidad = 1.0):
         """
         Genera el audio final combinando diferentes elementos según el modo seleccionado.
         
@@ -162,11 +162,11 @@ class DirectionalAudioGenerator:
 
             for _ in range(int(n_beeps)):
                 # Genera el bip como un segmento de audio
-                beep_audio = self.generate_beep_audio(0.1 * detection['distance'])
+                beep_audio = self.generate_beep_audio(0.1*velocidad)
                 beep_sequence.append(beep_audio)
 
                 if _ < n_beeps - 1:
-                    silence_wave = AudioSegment.silent(duration=50)
+                    silence_wave = AudioSegment.silent(duration=50*velocidad)
                     beep_sequence.append(silence_wave)
 
             # Concatena todos los bips en la secuencia

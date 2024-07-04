@@ -162,7 +162,7 @@ def main():
                 sorted_detections = sorted(detections, key=lambda x: x['distance'])
 
                 if sorted_detections[0]['distance'] < 3.5:
-                    audio_feedback.generate_final_audio(sorted_detections[0])
+                    audio_feedback.generate_final_audio(sorted_detections[0], velocidad= audio_speed)
                     if not audio_playing:
                         print("audio ········································································")
                         audio_thread = threading.Thread(target=play_audio_in_background, args=(audio_feedback,))
