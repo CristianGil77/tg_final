@@ -156,8 +156,9 @@ class DirectionalAudioGenerator:
             # OBJETO + SECUENCIA DE BEEPS EN 2D
             
             beep_sequence = []
-            n_beeps = 1 + (self.max_distance - detection['distance']) 
-            n_beeps = (n_beeps - 1) * 2 + 1
+            n_beeps = round(detection['distance']) 
+            if n_beeps == 0:
+                n_beeps = 1
 
             for _ in range(int(n_beeps)):
                 # Genera el bip como un segmento de audio
@@ -170,7 +171,7 @@ class DirectionalAudioGenerator:
 
             # Concatena todos los bips en la secuencia
             sequence_audio = sum(beep_sequence)
-            angulo = 70 if detection['angle'] > self.angle else -70 if detection['angle'] < -self.angle else 0
+            angulo = 75 if detection['angle'] > self.angle else -75 if detection['angle'] < -self.angle else 0
             pan = angulo / 90  # Mapea el ángulo al valor de pan (0 para la izquierda, 1 para la derecha)
             self.final_audio = (audio_object + sequence_audio).pan(pan)
             

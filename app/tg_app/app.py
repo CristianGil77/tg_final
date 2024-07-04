@@ -160,11 +160,13 @@ def main():
                 relative_position.calculate_ubication(detections, point_cloud, equalized_image)
                 
                 sorted_detections = sorted(detections, key=lambda x: x['distance'])
-                audio_feedback.generate_final_audio(sorted_detections[0])
-                if not audio_playing:
-                    print("audio ········································································")
-                    audio_thread = threading.Thread(target=play_audio_in_background, args=(audio_feedback,))
-                    audio_thread.start()
+
+                if sorted_detections[0] < 3.5:
+                    audio_feedback.generate_final_audio(sorted_detections[0])
+                    if not audio_playing:
+                        print("audio ········································································")
+                        audio_thread = threading.Thread(target=play_audio_in_background, args=(audio_feedback,))
+                        audio_thread.start()
 
 
 

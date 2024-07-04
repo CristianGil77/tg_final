@@ -29,7 +29,7 @@ class Ubication:
             distance, point = self.calcular_distancia_mediana(point_cloud, detection['bbox'])
             if point is not None:
                 angle_degrees = self._calculate_angle(point)
-                detection['distance'] = distance
+                detection['distance'] = self.calculate_steps(distance)
                 detection['angle'] = angle_degrees
                 # self.draw_ubication(image, distance, angle_degrees, x, y)
             else:
