@@ -161,7 +161,7 @@ def main():
                 
                 sorted_detections = sorted(detections, key=lambda x: x['distance'])
 
-                if sorted_detections[0] < 3.5:
+                if sorted_detections[0]['distance'] < 3.5:
                     audio_feedback.generate_final_audio(sorted_detections[0])
                     if not audio_playing:
                         print("audio ········································································")
