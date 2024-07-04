@@ -11,7 +11,7 @@ user_height: 1.8
 steps: 0.4
 
 use_imu: false
-feedback_mode: 1                       # 1,2,3,4
+feedback_mode: 4                       # 1,2,3,4
 
 
 #detection 
