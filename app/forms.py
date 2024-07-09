@@ -180,32 +180,32 @@ class PreprocessForm_general(FlaskForm):
         dict_["max_angle"] = 20
         
     use_hist_equ = BooleanField(
-        'Use hist equ',  validators=[Optional()], default=dict_["use_hist_equ"])
+        'Global histogram',  validators=[Optional()], default=dict_["use_hist_equ"])
     use_blur_filter = BooleanField(
-        'use blur filter',  validators=[Optional()], default=dict_["use_blur_filter"])
+        'Blur filter',  validators=[Optional()], default=dict_["use_blur_filter"])
     use_clahe = BooleanField(
-        'use clahe',  validators=[Optional()], default=dict_["use_clahe"])
+        'CLAHE',  validators=[Optional()], default=dict_["use_clahe"])
 
 
     blur_threshold = DecimalField(
-        'blur_threshold', places=1,
+        'Blur threshold', places=1,
         validators=[InputRequired(), NumberRange(min=0, max=1000)],
-        default=int(dict_["blur_threshold"]))
+        default=int(dict_["blur_threshold"]), description= "Minimum Laplacian variance for blur detection.")
 
     clahe_clip_limit = DecimalField(
-        'clahe_clip_limit', places=1,
+        'Clahe clip limit', places=1,
         validators=[InputRequired(), NumberRange(min=0, max=10)],
-        default=float(dict_["clahe_clip_limit"]))
+        default=float(dict_["clahe_clip_limit"]), description= "Maximum contrast limit in a region.")
     
     clahe_tile_grid_size = DecimalField(
-        'clahe_tile_grid_size', places=1,
+        'Clahe tile grid size', places=1,
         validators=[InputRequired(), NumberRange(min=0, max=10)],
-        default=int(dict_["clahe_tile_grid_size"]))
+        default=int(dict_["clahe_tile_grid_size"]), description= "Size of subregions for local equalization.")
     
     max_angle = DecimalField(
-        'Maximum angle', places=0,
+        'Angle threshold', places=0,
         validators=[InputRequired(), NumberRange(min=15, max=90)],
-        default=float(dict_["max_angle"]), description="The maximum angle difference / head inclination before the filter of images.")
+        default=float(dict_["max_angle"]), description="The front is defined from -angle threshold to +angle threshold.")
     
     
 
@@ -333,17 +333,17 @@ class ZedcommonForm(FlaskForm):
 
 
     resolution = DecimalField(
-        'resolution', places=0,
+        'Resolution', places=0,
         validators=[InputRequired(), AnyOf(values=[0,1,2,3])],
         default=float(dict_["resolution"]), description="# '0': HD2K, '1': HD1080, '2': HD720, '3': VGA")
     
     quality = DecimalField(
-        'quality', places=0,
+        'Quality', places=0,
         validators=[InputRequired(), AnyOf(values=[0,1,2,3,4])],
         default=float(dict_["quality"]), description="# '0': NONE, '1': PERFORMANCE, '2': QUALITY, '3': ULTRA - '4': NEURAL ")
     
     sensing_mode = DecimalField(
-        'sensing_mode', places=0,
+        'Sensing mode', places=0,
         validators=[InputRequired(), AnyOf(values=[0,1])],
         default=float(dict_["sensing_mode"]), description="# '0': STANDARD, '1': FILL")
     
