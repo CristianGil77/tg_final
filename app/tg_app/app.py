@@ -39,6 +39,7 @@ def main():
     fileName = "app/config/common/common.yaml"
     _, dict_common = miyaml.yaml_to_dict_general(fileName, parents=False)
 
+    print("Configuraciones basicas:")
     print(dict_common)
 
 
@@ -53,6 +54,7 @@ def main():
     fileName = "app/config/local_planner/params.yaml"
     _, dict_planer = miyaml.yaml_to_dict_general(fileName, parents=False)
 
+
     #Local planer
     max_distance = dict_planer["Maximun_distance"]#10
     min_distance = 0.1
@@ -60,8 +62,11 @@ def main():
     fileName = "app/config/yolov5/yolov5_params.yaml"
     _, dict_yolo = miyaml.yaml_to_dict_general(fileName, parents=False)
 
-    #Yolov8
+    print("Configuraciones YOLO V8:")
     print(dict_yolo)
+
+    #Yolov8
+    
     engine_file_path = "app/tg_app/Inference/yolov8_cpp/" + dict_yolo["weights"] #"Inference/yolov8_cpp/y8_416.engine"
     #print(engine_file_path)
     t_size = dict_yolo["inference_size_"]#(416, 416)
@@ -73,6 +78,9 @@ def main():
 
     fileName = "app/config/preprocess_node/preprocess_params.yaml"
     _, dict_prepro = miyaml.yaml_to_dict_general(fileName, parents=False)
+
+    print("Configuraciones preprocesamiento")
+    print(dict_prepro)
 
     #preproces
     blur_threshold = dict_prepro["blur_threshold"]# 100.0
@@ -88,6 +96,9 @@ def main():
 
     fileName = "app/config/zed_wrapper/common.yaml"
     _, dict_zed = miyaml.yaml_to_dict_general(fileName, parents=False)
+
+    print("Configuraciones cámara ZED")
+    print(dict_zed)
 
 
     # Parámetros iniciales
