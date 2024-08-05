@@ -2,9 +2,9 @@
 #
 
 
-weights: y8_416.engine
+weights: tra.engine
 #data: data.yaml
-confidence_threshold: 0.2
+confidence_threshold: 0.15
 iou_threshold: 0.1
 topk: 150
 
