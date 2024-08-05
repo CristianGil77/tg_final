@@ -188,7 +188,7 @@ def main():
 
                 print("clase más cercana;", clases[int(sorted_detections[0]["class"])])
                 print("############################################")
-                os.system('clear')
+                #os.system('clear')
                 relative_position.draw_bboxes(equalized_image, detections, clases )
 
                 #############################################################################
