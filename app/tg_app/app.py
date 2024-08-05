@@ -38,7 +38,7 @@ def main():
 
     fileName = "app/config/common/common.yaml"
     _, dict_common = miyaml.yaml_to_dict_general(fileName, parents=False)
-
+    print("############################################")
     print("Configuraciones basicas:")
     print(dict_common)
 
