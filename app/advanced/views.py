@@ -24,8 +24,8 @@ def advance():
 
     context = {
         'module': 'advanced.advance',
-        'forms_name': [['planner_form', 'Local Planner'],
-                       ['yolo_form', 'YOLO V5'],
+        'forms_name': [#['planner_form', 'Local Planner'],
+                       ['yolo_form', 'YOLO V8'],
                        ['preprocess_form', 'Preprocess'],
                        #['isaac_form', 'Isaac'],
                        ['zedcommon_form', 'ZED Common']

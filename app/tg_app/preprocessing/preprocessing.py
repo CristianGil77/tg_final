@@ -83,43 +83,37 @@ if __name__ == "__main__":
     preprocessing = Preprocessing(
         blur_threshold=100.0, 
         clahe_clip_limit=2.0, 
-        clahe_tile_grid_size=(8, 8),
-        yaw_angle_min=-60,
-        yaw_angle_max=60
+        clahe_tile_grid_size=(8, 8)
     )
     
     # Cargar una imagen de ejemplo en formato RGB
-    image = cv2.imread('test/example1.png')
-
-    plt.figure()
-    plt.title('Image')
-    plt.imshow(cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
-
-    # Descartar fotograma basado en ángulo
-    angles = [0, 45, 0]  # Ejemplo de ángulos (pitch, yaw, roll)
-    discard = preprocessing.discard_frame_based_on_angle(angles)
-    print(f"Discard frame: {discard}")
-
-    # Detectar desenfoque
-    is_blurry = preprocessing.detect_blur(image)
-    print(f"Is image blurry: {is_blurry}")
+    image = cv2.imread('Imagen de WhatsApp 2024-07-28 a las 16.55.21_1513bec0.jpg')
 
     # Equalizar histograma
     equalized_image = preprocessing.equalize_histogram(image)
-    plt.figure()
-    plt.title('Equalized Image')
-    plt.imshow(cv2.cvtColor(equalized_image, cv2.COLOR_RGB2BGR))
 
     # Aplicar CLAHE
     clahe_image = preprocessing.apply_clahe(image)
-    plt.figure()
-    plt.title('CLAHE Image')
-    plt.imshow(cv2.cvtColor(clahe_image, cv2.COLOR_RGB2BGR))
 
-    # Enfocar imagen
-    sharpened_image = preprocessing.sharpen_image(image)
+    # Mostrar imágenes comparándolas
+    fig, axs = plt.subplots(1, 2, figsize=(10, 6))
+
+    axs[0].imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+    axs[0].set_title('Imagen original')
+    axs[0].axis('off')
+
+    axs[1].imshow(cv2.cvtColor(equalized_image, cv2.COLOR_BGR2RGB))
+    axs[1].set_title('Imagen ecualizada')
+    axs[1].axis('off')
+
     plt.figure()
-    plt.title('Sharpened Image')
-    plt.imshow(cv2.cvtColor(sharpened_image, cv2.COLOR_RGB2BGR))
+    fig, axs = plt.subplots(1, 2, figsize=(10, 6))
+    axs[0].imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+    axs[0].set_title('Imagen original')
+    axs[0].axis('off')
+
+    axs[1].imshow(cv2.cvtColor(clahe_image, cv2.COLOR_BGR2RGB))
+    axs[1].set_title('CLAHE')
+    axs[1].axis('off')
 
     plt.show()
