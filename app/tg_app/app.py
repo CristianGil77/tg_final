@@ -130,9 +130,9 @@ def main():
 
 
     
+    print("Iniciando aplicativo")
 
-
-
+    
     # Inicialización de objetos con parámetros configurables
     zed_camera = ZEDCamera(resolution, depth_mode, sensing_mode, max_distance, min_distance)
     preprocessing = Preprocessing(blur_threshold, clahe_clip_limit, clahe_tile_grid_size, yaw_angle_min, yaw_angle_max)
