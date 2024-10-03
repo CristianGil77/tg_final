@@ -2,7 +2,6 @@ from flask import Flask, request, make_response, render_template, redirect, sess
 from app import create_app
 from app.forms import CommonForm
 from app.yaml import WriteYaml
-from app.NodesCaller import RosCaller
 import subprocess
 import signal
 import os
@@ -13,7 +12,6 @@ logging.basicConfig(level=logging.DEBUG)
 app = create_app()
 app.system_status = "Stopped"
 yaml = WriteYaml()
-app.myRoscaller = RosCaller()
 process = None
 
 #print(yaml.path)
@@ -91,10 +89,9 @@ def system():
 
 
     elif (user_exec == 'PowerOff'):
-        app.myRoscaller.stop()
         #logging.info("HEY apagar!")
         app.system_status = 'Stopped'
-        app.myRoscaller.shutdownall()
+        os.system("sudo shutdown -h now")
 
     else:
         if process is not None:
