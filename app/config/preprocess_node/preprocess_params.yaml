@@ -1,6 +1,6 @@
 use_blur_filter: false                                     # if True, the images with blur are "removed"
 use_hist_equ: false
-use_clahe: false
+use_clahe: true
 
                                    # if True, the input images are equalized
 blur_threshold: 100

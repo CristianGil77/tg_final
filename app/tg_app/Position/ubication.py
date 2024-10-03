@@ -85,7 +85,7 @@ class Ubication:
         upper_bound = Q3 + 1.5 * IQR
 
 
-        filtered_points = distancias[(distancias >= lower_bound) & (distancias <= Q3)]
+        filtered_points = distancias[(distancias >= lower_bound) & (distancias <= Q1)]
 
         if filtered_points.size == 0:
             print("no valid points after filtering")

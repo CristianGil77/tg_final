@@ -175,9 +175,3 @@ class DirectionalAudioGenerator:
             pan = angulo / 90  # Mapea el ángulo al valor de pan (0 para la izquierda, 1 para la derecha)
             self.final_audio = (audio_object + sequence_audio).pan(pan)
             
-
-        # Exporta el audio final
-        
-        # final_audio.export(os.path.join(self.folder_name, "directional_audio.wav"), format="wav")
-        # print("sonido")
-        # play(final_audio)
